@@ -1,8 +1,8 @@
 class Solution {
 public:
     bool carPooling(vector<vector<int>>& trips, int capacity) {
-        map<int,int> from_mp;
-        map<int,int> to_mp;
+        unordered_map<int,int> from_mp;
+        unordered_map<int,int> to_mp;
         
         for(auto trip:trips){
             from_mp[trip[1]]+=trip[0];
