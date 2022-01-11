@@ -11,33 +11,20 @@
  */
 class Solution {
 public:
-    int binToint(vector<int> v){
-        int res=0;
-        int j=0;
-        for(int i=v.size()-1;i>=0;i--){
-            res=res+v[i]*pow(2,j);
-            j++;
-        }
-        return res;
-    }
-    void dfs(TreeNode* root, vector<int> &v,int &sum){
-        
+    int dfs(TreeNode* root,int sum){
         if(root==NULL){
-            return ;
+            return 0;
         }
-        v.push_back(root->val);
-        dfs(root->left,v,sum);
-        dfs(root->right,v,sum);
-        if(root->left==NULL and root->right==NULL){
-            sum=sum+binToint(v);    
+        sum=(sum*2)+root->val;
+        // cout<<"Sum = "<<sum<<endl;
+        if(root->right==NULL and root->left==NULL){
+            return sum;
         }
-        
-        v.pop_back();
+        return (dfs(root->left,sum)+dfs(root->right,sum));
     }
     int sumRootToLeaf(TreeNode* root) {
-        vector<int> v;
-        int sum=0;
-        dfs(root,v,sum);
-        return sum;
+        // int sum=0;
+        return dfs(root,0);
+        
     }
 };
