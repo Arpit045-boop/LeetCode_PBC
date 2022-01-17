@@ -14,22 +14,35 @@ public:
             
         }
         v.push_back(temp);
+        // cout<<v.size()<<" "<<pattern.size()<<endl;
         if(v.size()!=pattern.size()){
             return false;
         }
-        map<char,string> charStr;
-        map<string,char> strChar;
-        for(int i=0;i<v.size();i++){
-            if(charStr.count(pattern[i])==0 and strChar.count(v[i])==0){
-                charStr[pattern[i]]=v[i];
-                strChar[v[i]]=pattern[i];
-            }
-            if(v[i]!=charStr[pattern[i]]){
+        set<string> s1;
+        set<char> s2;
+        for(string i:v){
+            s1.insert(i);
+        }
+        for(char i:pattern){
+            s2.insert(i);
+        }
+        if(s1.size()!=s2.size()){
+            return false;
+        }
+        
+        unordered_map<char,set<string>> mp;
+        for(int i=0;i<pattern.size();i++){
+            
+            mp[pattern[i]].insert(v[i]);
+        }
+        
+        for(int i=0;i<pattern.size();i++){
+         
+            if(mp[pattern[i]].size()!=1){
                 return false;
             }
         }
         return true;
-        
         
         
     }
