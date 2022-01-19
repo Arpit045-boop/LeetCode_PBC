@@ -9,40 +9,34 @@
 class Solution {
 public:
     ListNode *detectCycle(ListNode *head) {
-        if(head==NULL || head->next==NULL){
+        // vector<bool> vis(100000,false)
+        if(head==NULL or head->next==NULL){
             return NULL;
         }
-        if(head->next->next==head){
-            return head;
-        }
-        ListNode *slow=head;
-        ListNode *fast=head;
-        do
-        {
-            if(fast!=NULL && fast->next!=NULL)
-            {
-                slow=slow->next;
-                fast=fast->next->next;    
+        ListNode* temp=head;
+        unordered_map<ListNode*,int> mp;
+        int pos=-1;
+        int flag=0;
+        while(temp){
+            if(mp.count(temp)==1){
+                pos=mp[temp];
+                flag=1;
+                break;
             }
-            else
-            {
-                return NULL;
+            else{
+                pos++;
+                mp[temp]=pos;
             }
-            
-        }while(fast!=slow);
-        fast=head;
-        while(fast->next!=slow->next){
-            slow=slow->next;
-            fast=fast->next;
+            temp=temp->next;
         }
-        if(slow==fast && slow==head){
-            return slow;    
+        // cout<<pos;
+        if(flag==0){
+            return NULL;
         }
-        else
-        {
-            return slow->next;
+        while(pos--){
+            head=head->next;
         }
         
-        
+        return head;
     }
 };
