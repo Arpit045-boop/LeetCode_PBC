@@ -1,0 +1,86 @@
+#include<bits/stdc++.h>
+using namespace std;
+void solve(stack<int> st, int &pos, int &ans){
+  if(pos==1){
+    ans = st.top();
+    return ; 
+  }
+  pos--;
+  int temp = st.top();
+  st.pop();
+  solve(st, pos,ans);
+  st.push(temp);
+  return;
+}
+void solveInsert(stack<int> &st,int element){
+  if(st.empty()){
+    st.push(element); 
+    return;
+  }
+  int temp = st.top();
+  st.pop();
+  solveInsert(st,element);
+  st.push(temp);
+
+}
+void reverse(stack<int> &st){
+  if(st.empty()){
+    return;
+  }
+  int temp = st.top();
+  st.pop();
+  reverse(st);
+  solveInsert(st,temp);
+}
+void insertAtSortedStack(stack<int> &st, int element){
+  if(st.empty() || element > st.top()){
+    st.push(element);
+    return;
+  }
+  int temp = st.top();
+  st.pop();
+  insertAtSortedStack(st,element);
+  st.push(temp);
+}
+void SortedStack(stack<int> &st){
+  if(st.empty()){
+    return;
+  }
+  int temp = st.top();
+  st.pop();
+  SortedStack(st);
+  insertAtSortedStack(st,temp);
+}
+int main(){
+  stack<int> st;
+  st.push(1);
+  st.push(12);
+  st.push(32);
+  st.push(12);
+  st.push(4);
+  st.push(150);
+  st.push(26);
+  
+  // int size = st.size();
+  // int pos = -1;
+  // if(size & 1){
+  //   pos = size/2+1;
+  // }
+  // else{
+  //   pos = size/2;
+  // }
+  // int ans = -1;
+  // solve(st,pos,ans);
+  // cout<<ans<<endl;
+  // solveInsert(st);
+  // reverse(st);
+
+  // insertAtSortedStack(st,25);
+  SortedStack(st);
+  while(!st.empty()){
+    cout<<st.top()<<endl;
+    st.pop();
+  }
+
+  
+}
